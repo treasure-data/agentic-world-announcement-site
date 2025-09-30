@@ -1,3 +1,13 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(21px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 * {
   margin: 0;
   padding: 0;
@@ -5,8 +15,8 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", "Roboto", sans-serif;
-  background: linear-gradient(135deg, #131023 0%, #1a1a3a 50%, #3a61ff 100%);
+  font-family: "Inter", "Roboto", sans-serif;
+  background: url("../img/agentic-world-background-pattern.svg") bottom right/cover no-repeat, linear-gradient(135deg, #231670 0%, #6555ff 50%, #00b6ff 100%);
   color: #ffffff;
   min-height: 100vh;
   display: flex;
@@ -18,18 +28,29 @@ body {
 .container {
   padding: 40px 20px;
   text-align: center;
-  max-width: 90%;
+  max-width: 95%;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+  margin-bottom: 2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeInUp 560ms ease-out 0ms both;
 }
 
 h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  background: linear-gradient(135deg, #ffffff 0%, #3a61ff 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #00b6ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 4px 20px rgba(58, 97, 255, 0.3);
+  text-shadow: 0 4px 20px rgba(0, 182, 255, 0.3);
+  animation: fadeInUp 560ms ease-out 150ms both;
 }
 
 p {
@@ -39,6 +60,7 @@ p {
   font-weight: 400;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   padding: 0 20px;
+  animation: fadeInUp 560ms ease-out 300ms both;
 }
 
 .glow {
@@ -48,14 +70,61 @@ p {
   transform: translate(-50%, -50%);
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(58, 97, 255, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 182, 255, 0.1) 0%, transparent 70%);
   border-radius: 50%;
   z-index: -1;
 }
 
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 6px;
+  background: #ffffff;
+  color: #231670;
+  padding: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  z-index: 1000;
+  transition: top 0.3s ease;
+}
+.skip-link:focus {
+  top: 6px;
+}
+
+main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+}
+
+h1:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .logo, h1, p {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
 @media (min-width: 768px) {
   .container {
-    max-width: 600px;
+    max-width: 95%;
     padding: 40px 30px;
   }
 
@@ -75,7 +144,7 @@ p {
 }
 @media (min-width: 1024px) {
   .container {
-    max-width: 800px;
+    max-width: 95%;
     padding: 40px 20px;
   }
 
@@ -85,7 +154,7 @@ p {
 
   p {
     font-size: 1.25rem;
-    max-width: 600px;
+    max-width: 800px;
   }
 
   .glow {
