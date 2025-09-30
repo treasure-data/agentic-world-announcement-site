@@ -21,7 +21,7 @@
 body {
   font-family: 'Inter', 'Roboto', sans-serif;
   background:
-    url('../img/agentic-world-background-pattern.svg') bottom right/cover no-repeat,
+    url('../img/agentic-world-background-pattern.svg') bottom right/1000px no-repeat,
     linear-gradient(135deg, $primary-navy 0%, $primary-blue 50%, $secondary-blue 100%);
   color: $white;
   min-height: 100vh;
@@ -125,6 +125,12 @@ h1 {
 }
 
 @media (min-width: 768px) {
+  body {
+    background:
+      url('../img/agentic-world-background-pattern.svg') bottom right/cover no-repeat,
+      linear-gradient(135deg, $primary-navy 0%, $primary-blue 50%, $secondary-blue 100%);
+  }
+
   .container {
     max-width: 95%;
     padding: $container-padding-tablet;
