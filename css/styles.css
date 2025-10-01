@@ -25,7 +25,7 @@
 body {
   font-family: "Inter", "Roboto", sans-serif;
   background: linear-gradient(135deg, #00b5ff 0%, #4d7fff 25%, #6555ff 50%, #a855f7 75%, #5b21b6 100%);
-  background-size: 800% 800%;
+  background-size: 400% 400%;
   animation: gradient 60s ease infinite;
   color: #ffffff;
   min-height: 100vh;
