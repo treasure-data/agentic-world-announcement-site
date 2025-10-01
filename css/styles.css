@@ -8,6 +8,14 @@
     transform: translateY(0);
   }
 }
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +24,9 @@
 
 body {
   font-family: "Inter", "Roboto", sans-serif;
-  background: url("../img/agentic-world-background-pattern.svg") bottom right/700px no-repeat, linear-gradient(135deg, #231670 0%, #6555ff 50%, #00b6ff 100%);
+  background: url("../img/agentic-world-background-pattern.svg") bottom right/700px no-repeat, linear-gradient(135deg, #f4e8c1 -20%, #ff9a8b 0%, #00b5ff 25%, #6555ff 50%, #a855f7 75%, #5b21b6 100%);
+  background-size: auto, 800% 800%;
+  animation: gradient 60s ease infinite;
   color: #ffffff;
   min-height: 100vh;
   display: flex;
@@ -45,11 +55,11 @@ h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  background: linear-gradient(135deg, #ffffff 0%, #00b6ff 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #00b5ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 4px 20px rgba(0, 182, 255, 0.3);
+  text-shadow: 0 4px 20px rgba(0, 181, 255, 0.3);
   animation: fadeInUp 560ms ease-out 150ms both;
 }
 
@@ -70,7 +80,7 @@ p {
   transform: translate(-50%, -50%);
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(0, 182, 255, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 181, 255, 0.1) 0%, transparent 70%);
   border-radius: 50%;
   z-index: -1;
 }
@@ -116,17 +126,14 @@ h1:focus {
     transform: none !important;
   }
 
-  body::before,
-body::after,
-.gradient-layer-3,
-.gradient-layer-4 {
+  body {
     animation: none !important;
-    transition-duration: 0.01ms !important;
   }
 }
 @media (min-width: 768px) {
   body {
-    background: url("../img/agentic-world-background-pattern.svg") bottom right/cover no-repeat, linear-gradient(135deg, #231670 0%, #6555ff 50%, #00b6ff 100%);
+    background: url("../img/agentic-world-background-pattern.svg") bottom right/cover no-repeat, linear-gradient(90deg, #f4e8c1 0%, #ff9a8b 20%, #00b5ff 40%, #6555ff 60%, #a855f7 80%, #5b21b6 100%);
+    background-size: auto, 400% 400%;
   }
 
   .container {
