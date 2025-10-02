@@ -31,7 +31,7 @@ body {
   font-family: 'Inter', 'Roboto', sans-serif;
   background: linear-gradient(135deg, $blue-light 0%, $blue-dark 25%, $purple-light 50%, $purple-mid 75%, $purple-deep 100%);
   background-size: 400% 400%;
-  animation: gradient 60s ease infinite;
+  animation: gradient 30s ease infinite;
   color: $white;
   min-height: 100vh;
   display: flex;
@@ -145,6 +145,10 @@ h1 {
 }
 
 @media (min-width: 768px) {
+  body {
+    animation: gradient 60s ease infinite;
+  }
+
   body::before {
     background-size: cover;
   }
