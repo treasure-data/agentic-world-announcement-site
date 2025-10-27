@@ -230,6 +230,12 @@
           }
         });
 
+        // Add disclaimer before button row
+        var buttonRow = form.getFormElem().find('.mktoButtonRow');
+        if (buttonRow.length > 0) {
+          buttonRow.before('<p class="mktodisclaimer">Treasure Data respects your <a href="https://www.treasuredata.com/privacy/" target="_blank">privacy</a>.</p>');
+        }
+
         form.onSubmit(function() {
           if (typeof Treasure !== 'undefined' && typeof Treasure !== null) {
             var td = new Treasure({

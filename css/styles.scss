@@ -496,6 +496,28 @@ main {
   .mktoHtmlText {
     width: 100% !important;
   }
+
+  .mktodisclaimer {
+    font-size: 0.75rem;
+    color: rgba($heading-color, 0.7);
+
+    a {
+      font-size: 0.75rem;
+      color: rgba($purple-dark, 0.7);
+      text-decoration: underline;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: $purple-dark;
+      }
+
+      &:focus {
+        outline: $unit*0.4 solid $heading-color;
+        outline-offset: $unit*0.4;
+        border-radius: $unit*0.4;
+      }
+    }
+  }
 }
 
 @keyframes scroll {

@@ -439,6 +439,24 @@ main {
 #mktoForm_8874 .mktoHtmlText {
   width: 100% !important;
 }
+#mktoForm_8874 .mktodisclaimer {
+  font-size: 0.75rem;
+  color: rgba(39, 46, 104, 0.7);
+}
+#mktoForm_8874 .mktodisclaimer a {
+  font-size: 0.75rem;
+  color: rgba(35, 22, 112, 0.7);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+#mktoForm_8874 .mktodisclaimer a:hover {
+  color: #231670;
+}
+#mktoForm_8874 .mktodisclaimer a:focus {
+  outline: 2px solid #272E68;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
 
 @keyframes scroll {
   0% {
