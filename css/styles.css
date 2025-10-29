@@ -398,6 +398,8 @@ main {
 #mktoForm_8874 #Explicit_Opt_In__c {
   width: 30px !important;
   height: 30px !important;
+  min-height: 30px !important;
+  max-height: 30px !important;
   padding: 0 !important;
   margin-right: 10px !important;
   cursor: pointer !important;

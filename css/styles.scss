@@ -451,6 +451,8 @@ main {
   #Explicit_Opt_In__c {
     width: $unit*6 !important;
     height: $unit*6 !important;
+    min-height: $unit*6 !important;
+    max-height: $unit*6 !important;
     padding: 0 !important;
     margin-right: $unit*2 !important;
     cursor: pointer !important;
