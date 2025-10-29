@@ -517,6 +517,8 @@ main {
       color: rgba($purple-dark, 0.7);
       text-decoration: underline;
       transition: color 0.3s ease;
+      padding: 0 !important;
+      margin: 0 !important;
 
       &:hover {
         color: $purple-dark;

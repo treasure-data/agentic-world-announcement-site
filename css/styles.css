@@ -459,6 +459,8 @@ main {
   color: rgba(35, 22, 112, 0.7);
   text-decoration: underline;
   transition: color 0.3s ease;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 #mktoForm_8874 .mktodisclaimer a:hover {
   color: #231670;
