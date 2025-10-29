@@ -428,6 +428,8 @@ main {
     a {
       color: $heading-color !important;
       text-decoration: underline !important;
+      padding: 0 !important;
+      margin: 0 !important;
 
       &:hover {
         color: darken($heading-color, 10%) !important;

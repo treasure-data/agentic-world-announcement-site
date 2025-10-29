@@ -381,6 +381,8 @@ main {
 #mktoForm_8874 .mktoHtmlText a {
   color: #272E68 !important;
   text-decoration: underline !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 #mktoForm_8874 .mktoHtmlText a:hover {
   color: #191e43 !important;
