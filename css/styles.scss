@@ -143,7 +143,6 @@ main {
 
 .mobile-text {
   display: block;
-  margin-bottom: 0 !important;
 }
 
 .desktop-text {
@@ -294,6 +293,9 @@ main {
     color: $heading-color !important;
     box-sizing: border-box !important;
     transition: all 0.3s ease !important;
+    min-height: $unit*10.4 !important;
+    line-height: 1.5 !important;
+    -webkit-appearance: none !important;
 
     &:focus {
       outline: none !important;
@@ -319,6 +321,7 @@ main {
   select.mktoField,
   textarea.mktoField {
     width: 100% !important;
+    min-height: $unit*10.4 !important;
   }
 
   select.mktoField {

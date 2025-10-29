@@ -133,7 +133,6 @@ main {
 
 .mobile-text {
   display: block;
-  margin-bottom: 0 !important;
 }
 
 .desktop-text {
@@ -266,6 +265,9 @@ main {
   color: #272E68 !important;
   box-sizing: border-box !important;
   transition: all 0.3s ease !important;
+  min-height: 52px !important;
+  line-height: 1.5 !important;
+  -webkit-appearance: none !important;
 }
 #mktoForm_8874 .mktoField:focus {
   outline: none !important;
@@ -284,6 +286,7 @@ main {
 #mktoForm_8874 select.mktoField,
 #mktoForm_8874 textarea.mktoField {
   width: 100% !important;
+  min-height: 52px !important;
 }
 #mktoForm_8874 select.mktoField {
   padding-right: 42.5px !important;
