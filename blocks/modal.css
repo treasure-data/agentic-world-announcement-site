@@ -1,0 +1,219 @@
+/*
+ * modal.css — Save-the-Date dialog (native <dialog>)
+ * Holds the Marketo form. All values reference tokens in css/tokens.css.
+ */
+
+.modal {
+  width: min(560px, 92vw);
+  max-height: 90vh;
+  margin: auto; /* center in viewport (with UA inset:0 on the top-layer dialog) */
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background-color: var(--color-white);
+  color: var(--color-text);
+  box-shadow: 0 40px 80px -20px var(--color-dark-60);
+}
+
+.modal::backdrop {
+  background-color: var(--color-dark-60);
+}
+
+.modal__panel {
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--space-8);
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  color: var(--color-text);
+  background-color: var(--color-light);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.modal__close:hover { background-color: var(--color-medium-light); }
+.modal__close svg { width: 20px; height: 20px; }
+
+.modal__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-h-l);
+  font-weight: 700;
+  line-height: var(--leading-h-l);
+}
+
+.modal__lead {
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-6);
+  font-size: var(--text-b-m);
+  line-height: var(--leading-body);
+  color: var(--color-text-60);
+  max-width: 44ch;
+}
+
+/* Screen-reader-only live region for submit status */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ─── Marketo form — restyled to match the site ──────────────────────────
+   Marketo ships inline-styled markup + its own theme CSS, so nearly every
+   override needs !important. Scoped to .modal so it can't leak elsewhere. */
+.modal .mktoForm,
+.modal .mktoForm * {
+  box-sizing: border-box !important;
+  float: none !important;
+  font-family: var(--font-body) !important;
+  color: var(--color-text);
+  letter-spacing: normal !important;
+}
+
+.modal .mktoForm {
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+/* Collapse Marketo's float/column system into a simple vertical stack */
+.modal .mktoForm .mktoFormRow,
+.modal .mktoForm .mktoFormCol,
+.modal .mktoForm .mktoFieldWrap,
+.modal .mktoForm .mktoFieldDescriptor,
+.modal .mktoForm .mktoButtonRow,
+.modal .mktoForm .mktoButtonWrap {
+  width: 100% !important;
+  display: block !important;
+  position: static !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+}
+
+.modal .mktoForm .mktoFormRow + .mktoFormRow {
+  margin-top: var(--space-5) !important;
+}
+
+/* Remove Marketo's spacer/offset columns */
+.modal .mktoForm .mktoGutter,
+.modal .mktoForm .mktoOffset,
+.modal .mktoForm .mktoClear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Labels above the fields */
+.modal .mktoForm .mktoLabel {
+  width: auto !important;
+  display: block !important;
+  margin-bottom: var(--space-2) !important;
+  padding: 0 !important;
+  font-size: var(--text-b-s) !important;
+  font-weight: 600 !important;
+  color: var(--color-text) !important;
+}
+
+.modal .mktoForm .mktoRequiredField .mktoAsterix {
+  display: inline !important;
+  padding-left: 2px !important;
+  color: var(--color-primary) !important;
+}
+
+/* Inputs, selects, textareas */
+.modal .mktoForm input[type="text"],
+.modal .mktoForm input[type="email"],
+.modal .mktoForm input[type="tel"],
+.modal .mktoForm input[type="url"],
+.modal .mktoForm input[type="number"],
+.modal .mktoForm input[type="date"],
+.modal .mktoForm select.mktoField,
+.modal .mktoForm textarea.mktoField {
+  width: 100% !important;
+  height: auto !important;
+  padding: var(--space-3) var(--space-4) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-sm) !important;
+  background-color: var(--color-white) !important;
+  font-size: var(--text-b-s) !important;
+  color: var(--color-text) !important;
+  line-height: 1.4 !important;
+  box-shadow: none !important;
+}
+
+.modal .mktoForm input:focus,
+.modal .mktoForm select:focus,
+.modal .mktoForm textarea:focus {
+  outline: none !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px var(--color-primary-light) !important;
+}
+
+.modal .mktoForm input::placeholder { color: var(--color-medium) !important; }
+
+/* Submit → site primary pill (kills the red theme + its inline left margin) */
+.modal .mktoForm .mktoButtonRow {
+  margin-top: var(--space-6) !important;
+}
+
+.modal .mktoForm .mktoButton {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: var(--space-4) var(--space-7) !important;
+  border: none !important;
+  border-radius: var(--radius-btn) !important;
+  background-color: var(--color-primary) !important;
+  background-image: none !important;
+  color: var(--color-white) !important;
+  font-size: var(--text-b-s) !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  height: auto !important;
+  transition: background-color var(--duration-fast) var(--ease-out) !important;
+}
+
+.modal .mktoForm .mktoButton:hover {
+  background-color: var(--color-primary-medium) !important;
+}
+
+/* Disclaimer Marketo injects above the button row */
+.modal .mktoForm .mktodisclaimer,
+.modal .mktodisclaimer {
+  margin: var(--space-5) 0 0 !important;
+  font-size: var(--text-b-xs) !important;
+  color: var(--color-text-60) !important;
+}
+
+/* Validation errors */
+.modal .mktoForm .mktoError {
+  position: static !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+.modal .mktoForm .mktoError .mktoErrorMsg {
+  margin: var(--space-2) 0 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #d23b3b !important;
+  font-size: var(--text-b-xs) !important;
+  text-shadow: none !important;
+}
+
+.modal .mktoForm .mktoErrorArrow { display: none !important; }

@@ -1,0 +1,470 @@
+/*
+ * hero.css — Block styles for the hero section
+ * Full-bleed brand gradient, centered content stack:
+ * eyebrow → title → meta row → photo strip → lede → CTA.
+ * All values reference tokens in css/tokens.css.
+ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate; /* clean stacking context for the layers below */
+  background-color: var(--color-secondary-dark); /* fallback before layers paint */
+  color: var(--color-white);
+  text-align: center;
+  padding-bottom: var(--space-9);
+}
+
+/* One continuous surface: the bright field (purple base + glows in .hero__bg)
+   spans the whole section — hero AND the testimonials below — and this radial
+   overlay fades it to black. The fade is transparent up around the CTA (~57%)
+   and reaches full black by halfway through the carousel (~81%), so the bright
+   field effectively "ends" there. Wide horizontal radius keeps the bottom edge
+   uniformly black. Sits above the glows but below all content, so the
+   transparent cards show the darkening field through them. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Composite this layer too, so WebKit orders it above the (also composited)
+     glows — otherwise the glows paint over the fade and it vanishes. */
+  transform: translateZ(0);
+  background: radial-gradient(220% 55% at 50% 100%,
+    var(--color-black) 51%, transparent 100%);
+}
+
+/* ─── Background layers ────────────────────────────────────────────────── */
+/* Purple base field; the two glows sit on top as independent images.
+   The glow blur is baked into the PNGs (a CSS filter:blur() blanks inside
+   overflow:hidden in WebKit), so each renders identically in every browser
+   while staying independently positionable here. */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* Isolate the animated/composited glows so their GPU layers can't escape
+     above the content in WebKit (Safari) and wash it out. */
+  isolation: isolate;
+  background-color: var(--gradient-hero-base);
+  background-image: var(--gradient-hero-base);
+}
+
+/* Each glow is a soft, pre-blurred blob you can move and resize on its own.
+   Knobs: `width` = size · `left`/`right`/`top`/`bottom` = location. */
+.hero__glow {
+  position: absolute;
+  height: auto;
+  max-width: none;
+}
+
+.hero__glow--left {   /* teal */
+  width: 280%;
+    left: 0;
+    top: 140vh;
+    transform: translateX(-50%) translateY(-50%);
+    /* Drift composes via the independent translate/rotate props, leaving the
+       positioning transform above untouched. */
+    will-change: translate, rotate;
+    animation: hero-drift-a 26s linear infinite;
+}
+
+.hero__glow--right {  /* coral → magenta */
+  width: 220%;
+    left: 100%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    will-change: translate, rotate;
+    animation: hero-drift-b 31s linear infinite;
+}
+
+/* Brand shape blob bleeding off the top-right corner.
+   Glow/shadow is baked into the PNG — no CSS shadow needed. */
+.hero__shape {
+  /*
+  position: absolute;
+  top: -18%;
+  right: -8%;
+  width: min(72%, 880px);
+  height: auto;
+  */
+
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 125vw;
+  height: auto;
+  transform: translateX(-15%) translateY(50%);
+  max-width: none;
+
+  will-change: translate, rotate;
+  animation: hero-drift-c 37s linear infinite;
+}
+
+/* ─── Ambient drift ────────────────────────────────────────────────────────
+   Slow float + slight rotation on the background layers. Each traces a smooth
+   elliptical orbit at LINEAR speed — sampled every 12.5% so the path curves
+   instead of cornering, keeping velocity continuous (no dwell-then-surge, no
+   jerk at the waypoints). Animated on the independent translate/rotate props
+   so each layer's positioning transform stays intact. 0% and 100% match for a
+   seamless loop; long, mismatched durations keep the three out of sync. */
+@keyframes hero-drift-a {
+  0%    { translate: 7%   -2%;   rotate: 0deg; }
+  12.5% { translate: 6%   0.1%;  rotate: 1.8deg; }
+  25%   { translate: 3.5% 1%;    rotate: 2.5deg; }
+  37.5% { translate: 1%   0.1%;  rotate: 1.8deg; }
+  50%   { translate: 0%   -2%;   rotate: 0deg; }
+  62.5% { translate: 1%   -4.1%; rotate: -1.8deg; }
+  75%   { translate: 3.5% -5%;   rotate: -2.5deg; }
+  87.5% { translate: 6%   -4.1%; rotate: -1.8deg; }
+  100%  { translate: 7%   -2%;   rotate: 0deg; }
+}
+@keyframes hero-drift-b {
+  0%    { translate: 0%    2.5%; rotate: 0deg; }
+  12.5% { translate: -0.9% 0.7%; rotate: -1.8deg; }
+  25%   { translate: -3%   0%;   rotate: -2.5deg; }
+  37.5% { translate: -5.1% 0.7%; rotate: -1.8deg; }
+  50%   { translate: -6%   2.5%; rotate: 0deg; }
+  62.5% { translate: -5.1% 4.3%; rotate: 1.8deg; }
+  75%   { translate: -3%   5%;   rotate: 2.5deg; }
+  87.5% { translate: -0.9% 4.3%; rotate: 1.8deg; }
+  100%  { translate: 0%    2.5%; rotate: 0deg; }
+}
+@keyframes hero-drift-c {
+  0%    { translate: 3%    3%;   rotate: 0deg; }
+  12.5% { translate: 2.3%  5.1%; rotate: 1.1deg; }
+  25%   { translate: 0.5%  6%;   rotate: 1.5deg; }
+  37.5% { translate: -1.3% 5.1%; rotate: 1.1deg; }
+  50%   { translate: -2%   3%;   rotate: 0deg; }
+  62.5% { translate: -1.3% 0.9%; rotate: -1.1deg; }
+  75%   { translate: 0.5%  0%;   rotate: -1.5deg; }
+  87.5% { translate: 2.3%  0.9%; rotate: -1.1deg; }
+  100%  { translate: 3%    3%;   rotate: 0deg; }
+}
+
+/* Hold still when the user prefers reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .hero__glow,
+  .hero__shape {
+    animation: none;
+  }
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2; /* above the bg glows AND the black-fade overlay */
+  /* Promote to its own composite layer so WebKit orders it ABOVE the animated
+     glow layers (which otherwise escape and wash the content out). */
+  transform: translateZ(0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-7);
+}
+
+/* ─── Eyebrow ──────────────────────────────────────────────────────────── */
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  /* Cap to the content width so the img's max-width:100% has a real limit to
+     shrink against (an inline-flex otherwise sizes to the logo's full width). */
+  max-width: 100%;
+}
+
+/* Full horizontal lockup, ~19px tall. Width-driven (with height:auto) so the
+   global `img { max-width:100% }` shrinks it proportionally on narrow screens
+   instead of squashing a fixed height. */
+.hero__eyebrow img {
+  width: 357px;
+  height: auto;
+  max-width: 100%;
+}
+
+/* ─── Title ────────────────────────────────────────────────────────────── */
+.hero__title {
+  max-width: 24ch;
+  color: var(--color-white);
+  font-weight: var(--weight-h-xl);
+}
+
+/* "The Agentic Experience" on its own line (kept together), "is here" below.
+   The lead is a block so the break always lands after "Experience"; it wraps
+   internally only on very small screens so it never overflows. */
+.hero__title-lead {
+  display: block;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .hero__title-lead { white-space: normal; }
+}
+
+/* ─── Meta row ─────────────────────────────────────────────────────────── */
+.hero__meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero__meta-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-inline: var(--space-7);
+  align-items: flex-start;
+}
+
+.hero__meta-item + .hero__meta-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 2.5rem;
+  background-color: var(--color-white-20);
+  display: none;
+}
+
+.hero__meta-label {
+  font-family: var(--font-body);
+  font-size: var(--text-b-xxs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-white-60);
+}
+
+.hero__meta-value {
+  font-family: var(--font-headline);
+  font-size: var(--text-h-xs);
+  font-weight: var(--weight-h-s);
+  color: var(--color-white);
+}
+
+/* Treasure wordmark + diamond standing in for the "Presented by" value.
+   Matches the type size of the adjacent meta values. */
+.hero__meta-logo {
+  display: block;
+  width: auto;
+  height: var(--text-h-xs);
+}
+
+/* ─── Photo strip ──────────────────────────────────────────────────────── */
+/* Scattered, editorial collage — each photo carries its own aspect ratio,
+   width, vertical offset and tilt. Centered on a shared baseline so the
+   per-photo translateY/rotate read as an organic scatter rather than a row. */
+.hero__gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+/* Desktop shows the static 5-photo fan; the duplicate set only exists for the
+   mobile marquee (see the ≤768px block below). */
+.hero__photo--clone {
+  display: none;
+}
+
+.hero__photo {
+  flex: 0 1 auto;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  /* Resting position is driven by per-photo vars so the fan-in entrance can
+     settle into it (see --y / --rot / --fan-x below). */
+  transform: translate(0, var(--y, 0)) rotate(var(--rot, 0deg)) scale(1);
+  /* Entrance: collapsed at center → fan out to rest. Center-first stagger
+     (set per child) reads as an outward fan. */
+  opacity: 0;
+  animation: hero-fan 900ms var(--ease-smooth) both;
+}
+
+/* Start stacked & pulled toward center (--fan-x), then unfurl to the per-photo
+   resting transform. The `to` state matches the base transform so there's no
+   jump when the animation's fill hands control back. */
+@keyframes hero-fan {
+  from {
+    opacity: 0;
+    transform: translate(var(--fan-x, 0), 24px) rotate(0deg) scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, var(--y, 0)) rotate(var(--rot, 0deg)) scale(1);
+  }
+}
+
+.hero__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Per-photo character: size · proportion · drop (--y) · tilt (--rot).
+   --fan-x = how far this photo starts pulled toward center; the stagger
+   (--fan-delay) runs center-out so the strip unfurls from the middle. */
+.hero__photo:nth-child(1) {
+  max-width: 210px;
+  aspect-ratio: 13 / 16;
+  aspect-ratio: 0.9206622;
+  --y: 3%;
+  --rot: 0deg;
+  --fan-x: 135px;
+  animation-delay: 0.24s;
+}
+
+.hero__photo:nth-child(2) {
+  max-width: 205px;
+  aspect-ratio: 16 / 15;
+  aspect-ratio: 1.16970181;
+  --y: 0%;
+  --rot: -4deg;
+  --fan-x: 68px;
+  animation-delay: 0.12s;
+}
+
+.hero__photo:nth-child(3) {
+  max-width: 222px;
+  aspect-ratio: 7 / 10;
+  aspect-ratio: 0.79351949;
+  --y: -3%;
+  --rot: 0deg;
+  --fan-x: 0px;
+  animation-delay: 0s;
+}
+
+.hero__photo:nth-child(4) {
+  max-width: 195px;
+  aspect-ratio: 1 / 1;
+  aspect-ratio: 1.16970181;
+  --y: 0%;
+  --rot: 0deg;
+  --fan-x: -68px;
+  animation-delay: 0.12s;
+}
+
+.hero__photo:nth-child(5) {
+  max-width: 214px;
+  aspect-ratio: 3 / 4;
+  aspect-ratio: 0.9206622;
+  --y: 2%;
+  --rot: 5deg;
+  --fan-x: -135px;
+  animation-delay: 0.24s;
+}
+
+/* ─── Lede ─────────────────────────────────────────────────────────────── */
+.hero__lede {
+  max-width: 54ch;
+  color: var(--color-white);
+}
+
+/* ─── CTA ──────────────────────────────────────────────────────────────── */
+/* Halve the lede→CTA gap: the stack's flex gap is space-7 and the CTA used to
+   add space-2 on top; a negative margin pulls the net down to (space-7+space-2)/2. */
+.hero__cta {
+  margin-top: calc((var(--space-2) - var(--space-7)) / 2);
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero__meta-item {
+    padding-inline: var(--space-5);
+  }
+
+  /* Seamless auto-looping marquee on small screens. No scrollbar, and the
+     max-content track is wider than the viewport so it bleeds off both edges
+     (clipped by .hero's overflow:hidden). The duplicate set (.hero__photo--clone)
+     forms the second half so translateX(-50%) wraps without a visible seam. */
+  .hero__gallery {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: var(--space-4);
+    margin-inline: 0;
+    padding-inline: 0;
+    padding-block: var(--space-5);
+    overflow: visible;
+    animation: hero-marquee 38s linear infinite;
+  }
+
+  .hero__photo--clone {
+    display: block;
+  }
+
+  /* Even, fixed-width slides; the fan-in entrance and scatter are dropped so
+     the marquee reads as a clean continuous strip. */
+  .hero__photo,
+  .hero__photo:nth-child(1),
+  .hero__photo:nth-child(2),
+  .hero__photo:nth-child(3),
+  .hero__photo:nth-child(4),
+  .hero__photo:nth-child(5) {
+    flex: 0 0 auto;
+    width: min(58vw, 260px);
+    max-width: none;
+    aspect-ratio: 3 / 4;
+    --fan-x: 0px;
+    --y: 0%;
+    --rot: 0deg;
+    opacity: 1;
+    animation: none;
+  }
+
+  /* Pause the loop on touch/hold so it can be inspected. */
+  .hero__gallery:hover {
+    animation-play-state: paused;
+  }
+}
+
+/* Advance by exactly one of the two identical halves for a seamless wrap. */
+@keyframes hero-marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* Reduced motion: no marquee. Fall back to a quiet, swipeable strip with the
+   scrollbar hidden, and drop the duplicate set so photos aren't shown twice. */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .hero__gallery {
+    width: auto;
+    overflow-x: auto;
+    animation: none;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+  .hero__gallery::-webkit-scrollbar { display: none; }
+  .hero__photo { scroll-snap-align: center; }
+  .hero__photo--clone { display: none; }
+}
+
+/* Respect reduced-motion: show the photos at rest with no entrance. */
+@media (prefers-reduced-motion: reduce) {
+  .hero__photo {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__meta {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* Center the label + value once the items stack vertically. */
+  .hero__meta-item {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero__meta-item + .hero__meta-item::before {
+    display: none;
+  }
+}

@@ -1,0 +1,179 @@
+/*
+ * cta.css — "The room is filling up." register band
+ * Full-bleed dark section, centered content. The submit opens the modal.
+ * All values reference tokens in css/tokens.css.
+ */
+
+.cta {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  text-align: center;
+}
+
+.cta.section {
+  padding-bottom: var(--space-10);
+}
+
+.cta__inner {
+  max-width: 900px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.cta__title {
+  color: var(--color-white);
+  line-height: 1.05;
+}
+
+.cta__lead {
+  max-width: 48ch;
+  color: var(--color-white-60);
+}
+
+/* ─── Email + submit row ───────────────────────────────────────────────── */
+.cta__form {
+  display: flex;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 680px;
+  margin-top: var(--space-4);
+}
+
+.cta__email {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-white-20);
+  background-color: var(--color-white-10);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: var(--text-b-m);
+}
+
+.cta__email::placeholder { color: var(--color-white-40); }
+
+.cta__email:focus-visible {
+  outline: none;
+  border-color: var(--color-white-40);
+}
+
+/* White pill, black text → purple/white on hover (matches the site CTAs) */
+.cta__submit {
+  flex-shrink: 0;
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.cta__submit:hover {
+  background-color: var(--color-cta-hover);
+  color: var(--color-white);
+}
+
+/* ─── Secondary actions ────────────────────────────────────────────────── */
+.cta__secondary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.cta__btn {
+  padding: var(--space-4) var(--space-7);
+  border-radius: var(--radius-full);
+  background-color: var(--color-white-10);
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: var(--text-b-s);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.cta__btn:hover {
+  background-color: var(--color-white-20);
+  color: var(--color-white);
+}
+
+/* ─── Brand logo carousel (infinite marquee) ───────────────────────────── */
+/* Breaks out of the 900px .cta__inner to span the full content width. The
+   parent is a centered flex column, so flex-shrink:0 lets this wider strip
+   overflow evenly on both sides and stay centered on the page axis. */
+.cta__brands {
+  flex-shrink: 0;
+  width: min(var(--content-max), 100vw - 2 * var(--content-pad));
+  margin-top: var(--space-6);
+}
+
+/* Clip the track and fade both edges so logos appear/disappear softly. */
+.cta__brands-viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Two identical halves sit side by side; translating by -50% advances exactly
+   one half, so the loop is seamless. width:max-content lets the row size to
+   its content rather than the viewport. */
+.cta__brands-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(var(--space-7), 6vw, var(--space-9));
+  width: max-content;
+  animation: cta-marquee 60s linear infinite;
+}
+
+/* Pause when the user hovers the strip. */
+.cta__brands:hover .cta__brands-track {
+  animation-play-state: paused;
+}
+
+.cta__brand {
+  flex-shrink: 0;
+  height: clamp(36px, 4.5vw, 56px);
+  width: auto;
+  /* Logos ship pre-colored white (img/brands/white). */
+  opacity: 0.7;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.cta__brand:hover {
+  opacity: 1;
+}
+
+@keyframes cta-marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* No scroll for reduced-motion: show a static, wrapped set of logos. */
+@media (prefers-reduced-motion: reduce) {
+  .cta__brands-viewport {
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+  .cta__brands-track {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: var(--space-7);
+    animation: none;
+  }
+  /* Hide the duplicate half so logos aren't shown twice when wrapped. */
+  .cta__brand:nth-child(n + 17) { display: none; }
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .cta__form {
+    flex-direction: column;
+  }
+  .cta__submit {
+    width: 100%;
+  }
+  /* The viewport-relative clamp bottoms out at its 36px floor on phones, which
+     reads too small — bump the logos up on mobile. */
+  .cta__brand {
+    height: clamp(48px, 12vw, 60px);
+  }
+}

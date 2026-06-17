@@ -1,0 +1,169 @@
+/*
+ * testimonial.css — Mainstage headliner spotlight (Daymond John)
+ * Light mint field with the green brand shape bleeding off the bottom-right
+ * (hero-style background treatment). Two columns: portrait card + bio/quote.
+ * All values reference tokens in css/tokens.css.
+ */
+
+.speaker {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-mint);
+  color: var(--color-text);
+}
+
+/* ─── Background — green brand shape, blur baked into the PNG ──────────── */
+.speaker__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.speaker__shape {
+  position: absolute;
+  right: -10%;
+  bottom: -22%;
+  width: min(58%, 760px);
+  height: auto;
+  max-width: none;
+
+  /* Same ambient drift as the hero background layers: a slow elliptical orbit
+     at linear speed (continuous velocity, no dwell or jerk), animated on the
+     independent translate/rotate props. */
+  will-change: translate, rotate;
+  animation: speaker-drift 24s linear infinite;
+}
+
+/* Smooth elliptical orbit sampled every 12.5% so the path curves instead of
+   cornering. Amplitude is larger than the hero glows' because this shape is
+   much smaller — translate %s are relative to the element's own size, so the
+   same % moves it far less. 0% and 100% match for a seamless loop. */
+@keyframes speaker-drift {
+  0%    { translate: 7.5%  2%;    rotate: 0deg; }
+  12.5% { translate: 5.5%  5.2%;  rotate: 2.1deg; }
+  25%   { translate: 0.5%  6.5%;  rotate: 3deg; }
+  37.5% { translate: -4.5% 5.2%;  rotate: 2.1deg; }
+  50%   { translate: -6.5% 2%;    rotate: 0deg; }
+  62.5% { translate: -4.5% -1.2%; rotate: -2.1deg; }
+  75%   { translate: 0.5%  -2.5%; rotate: -3deg; }
+  87.5% { translate: 5.5%  -1.2%; rotate: -2.1deg; }
+  100%  { translate: 7.5%  2%;    rotate: 0deg; }
+}
+
+/* Hold still when the user prefers reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .speaker__shape { animation: none; }
+}
+
+/* ─── Layout ──────────────────────────────────────────────────────────── */
+.speaker__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: var(--space-9);
+}
+
+/* ─── Portrait card ───────────────────────────────────────────────────── */
+.speaker__card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 5 / 7;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-secondary); /* purple field behind the photo */
+}
+
+/* B&W cutout (transparent PNG) anchored to the bottom of the purple card. */
+.speaker__photo {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: auto;
+}
+
+.speaker__tag {
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-5);
+  z-index: 1;
+  display: inline-block;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-full);
+  background-color: var(--color-white);
+  color: var(--color-text);
+  font-size: var(--text-b-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─── Bio + quote ─────────────────────────────────────────────────────── */
+.speaker__body {
+  max-width: 36rem;
+}
+
+.speaker__name {
+  font-weight: 700;
+}
+
+.speaker__role {
+  margin-top: var(--space-3);
+  font-size: var(--text-b-m);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.speaker__bio {
+  margin-top: var(--space-5);
+  font-size: var(--text-b-m);
+  line-height: var(--leading-body);
+  color: var(--color-text-80);
+}
+
+.speaker__quote {
+  margin-top: var(--space-8);
+  font-family: var(--font-headline);
+  font-size: var(--text-h-m);
+  font-weight: 700;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.speaker__quote-accent {
+  background: var(--gradient-speaker-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .speaker__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    justify-items: center;
+    text-align: center;
+  }
+
+  /* Stack centers the layout, but the bio/quote read better left-aligned.
+     The block itself stays centered (justify-items above); only its text is
+     reset to the left. */
+  .speaker__body {
+    max-width: 44ch;
+    text-align: left;
+  }
+
+  .speaker__tag { text-align: left; }
+
+  .speaker__shape {
+    right: -25%;
+    bottom: -12%;
+    width: min(80%, 520px);
+  }
+}

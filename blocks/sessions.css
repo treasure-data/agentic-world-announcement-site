@@ -1,0 +1,172 @@
+/*
+ * sessions.css — "Two days. Zero fluff." grid section
+ * Dark section with a glowing radial top-edge border.
+ * All values reference tokens in css/tokens.css.
+ */
+
+.sessions {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* Top-edge glow: a short, wide coral→magenta→purple bloom. The blur(50px) is
+   baked into the PNG (a live CSS filter blanks inside overflow:hidden in
+   WebKit), so it renders identically everywhere. Oversized horizontally so it
+   bleeds off the left/right edges; overflow:hidden on .sessions clips it. */
+/* Horizon glow: soft at the top (blooms up, fades into the dark above),
+   bright with a HARD edge at the bottom where it meets the dark section. */
+.sessions::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200%;
+  height: 96px;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("../img/sessions-glow-v5.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: none;
+}
+
+/* Keep content above the glow; extra top room for the glow + breathing space */
+.sessions {
+  /* padding-block: clamp(9rem, 20vw, 20rem) var(--space-12); */
+}
+
+.sessions > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────── */
+.sessions__header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-8);
+  margin-bottom: var(--space-9);
+}
+
+.sessions__eyebrow {
+  color: var(--color-secondary);
+  margin-bottom: var(--space-5);
+}
+
+.sessions__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-d-m);
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.sessions__intro {
+  font-size: var(--text-b-m);
+  line-height: var(--leading-body);
+  color: var(--color-white);
+  max-width: 42ch;
+}
+
+/* ─── Bento grid ───────────────────────────────────────────────────────── */
+.sessions__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+/* Row 2: wide card spans two columns, narrow card stays one (and taller) */
+.scard--4 {
+  grid-column: span 2;
+  align-self: start;
+  min-height: 18rem;
+}
+
+.scard--5 {
+  min-height: 23rem;
+}
+
+/* ─── Card ─────────────────────────────────────────────────────────────── */
+.scard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-6);
+  min-height: 20rem;
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+.scard--1 { background-image: var(--gradient-card-1); }
+.scard--2 { background-image: var(--gradient-card-2); }
+.scard--3 { background-image: var(--gradient-card-3); }
+.scard--4 { background-image: var(--gradient-card-4); }
+.scard--5 { background-image: var(--gradient-card-5); }
+
+.scard__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.scard__icon {
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+.scard__num {
+  font-family: var(--font-headline);
+  font-size: var(--text-d-m);
+  font-weight: 200;
+  line-height: 1;
+  color: var(--color-white-40);
+}
+
+.scard__title {
+  font-family: var(--font-headline);
+  font-size: var(--text-h-s);
+  font-weight: 700;
+}
+
+.scard__desc {
+  margin-top: var(--space-3);
+  font-size: var(--text-b-s);
+  line-height: var(--leading-body);
+  color: var(--color-white-80);
+  max-width: 40ch;
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .sessions__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .scard--4 {
+    grid-column: auto;
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 768px) {
+  .sessions__header {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .sessions__grid {
+    grid-template-columns: 1fr;
+  }
+  .scard,
+  .scard--4,
+  .scard--5 {
+    min-height: 14rem;
+  }
+}

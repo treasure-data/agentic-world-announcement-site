@@ -1,0 +1,196 @@
+/*
+ * tokens.css — Treasure AI / Agentic World
+ * Single source of truth. Do not override values here.
+ * Add new tokens below; never edit existing ones in place.
+ */
+
+:root {
+
+  /* ─── Fonts ─────────────────────────────────────────────────────────── */
+  --font-headline: 'Manrope', sans-serif;
+  --font-body:     'Inter', sans-serif;
+
+  /* ─── Brand Gradient ─────────────────────────────────────────────────
+     Hero accents, logo gem, key highlights only. Never body text.       */
+  --gradient-brand: linear-gradient(
+    135deg,
+    #ff86b4 0%,
+    #c572dd 18%,
+    #9864ff 35%,
+    #3d9cff 70%,
+    #00c3ff 100%
+  );
+
+  /* ─── Color: Primary (blue) ──────────────────────────────────────────*/
+  --color-primary:        #1A57DB;
+  --color-primary-medium: #5A81DD;  /* hover */
+  --color-primary-light:  #C7D4F3;
+  --color-primary-dark:   #252D6E;
+
+  /* ─── Color: Secondary (purple) ─────────────────────────────────────*/
+  --color-secondary:        #A37AFC;
+  --color-secondary-medium: #B49EF6; /* hover */
+  --color-secondary-light:  #E6DEFB;
+  --color-secondary-dark:   #231670;
+
+  /* ─── Color: Tertiary / Ink (near-black) ────────────────────────────*/
+  --color-tertiary:       #141024;
+  --color-tertiary-light: #F4FEFF;
+
+  /* ─── Color: Inline links ────────────────────────────────────────────*/
+  --color-link:       #2e40a6;
+  --color-link-hover: #3A61FF;
+
+  /* ─── Neutrals ───────────────────────────────────────────────────────*/
+  --color-black:          #141024;
+  --color-dark:           #44474A;
+  --color-medium:         #898790;
+  --color-medium-light:   #C4C3C8;
+  --color-light:          #F7F7F7;
+  --color-white:          #FFFFFF;
+
+  /* Dark opacity steps */
+  --color-dark-80:  rgba(20, 16, 36, 0.80);
+  --color-dark-60:  rgba(20, 16, 36, 0.60);
+  --color-dark-40:  rgba(20, 16, 36, 0.40);
+  --color-dark-20:  rgba(20, 16, 36, 0.20);
+  --color-dark-10:  rgba(20, 16, 36, 0.10);
+
+  /* White opacity steps */
+  --color-white-80: rgba(255, 255, 255, 0.80);
+  --color-white-60: rgba(255, 255, 255, 0.60);
+  --color-white-40: rgba(255, 255, 255, 0.40);
+  --color-white-20: rgba(255, 255, 255, 0.20);
+  --color-white-10: rgba(255, 255, 255, 0.10);
+
+  /* ─── Text ───────────────────────────────────────────────────────────*/
+  --color-text:    #131023;
+  --color-text-80: rgba(19, 16, 35, 0.80);
+  --color-text-60: rgba(19, 16, 35, 0.60);
+
+  /* ─── Borders ────────────────────────────────────────────────────────*/
+  --color-border:       #C4C3C8;
+  --color-border-hover: #44474A;
+  --color-hr:           #131023;
+
+  /* ─── Type Scale: Display ────────────────────────────────────────────*/
+  --text-d-l:  clamp(2.75rem,  5.952vi + -0.107rem, 5.25rem);
+  --text-d-m:  clamp(2.73rem, 5.262vi  +  0.204rem, 4.94rem);
+  --text-d-s:  clamp(2.375rem, 3.274vi +  0.804rem, 3.75rem);
+  --text-d-xs: clamp(2.375rem, 1.19vi  +  1.804rem, 2.875rem);
+
+  --leading-display: 1.05;
+  --weight-display:  400;
+
+  /* ─── Type Scale: Headings ───────────────────────────────────────────*/
+  --text-h-xxl: clamp(3rem,    3.869vi + 1.143rem, 4.625rem);
+  --text-h-xl:  clamp(2.375rem,2.679vi + 1.089rem, 3.5rem);
+  --text-h-l:   clamp(1.75rem, 2.976vi + 0.321rem, 3rem);
+  --text-h-m:   clamp(1.5rem,  0.595vi + 1.214rem, 1.75rem);
+  --text-h-s:   1.5rem;
+  --text-h-xs:  1.25rem;
+
+  --weight-h-xxl: 700; --weight-h-xl: 700; --weight-h-l: 600;
+  --weight-h-m:   600; --weight-h-s:  500; --weight-h-xs: 500;
+
+  --leading-h-xxl: 116%; --leading-h-xl: 135%; --leading-h-l:  130%;
+  --leading-h-m:   140%; --leading-h-s:  140%; --leading-h-xs: 140%;
+
+  /* ─── Type Scale: Body ───────────────────────────────────────────────*/
+  --text-b-l:  clamp(1.25rem, 0.595vi + 0.964rem, 1.5rem);
+  --text-b-m:  clamp(0.89rem, 0.298vi + 0.747rem, 1.015rem);
+  --text-b-s:  1rem;
+  --text-b-xs: 0.875rem;
+  --text-b-xxs: 0.675rem;
+
+  --leading-body: 145%;
+  --weight-body:  400;
+
+  /* ─── Spacing ────────────────────────────────────────────────────────*/
+  --space-1:  0.25rem;          /*  4px */
+  --space-2:  0.5rem;           /*  8px */
+  --space-3:  0.75rem;          /* 12px */
+  --space-4:  1.125rem;         /* 18px */
+  --space-5:  clamp(1.125rem,  0.893vi + 0.696rem, 1.5rem);
+  --space-6:  clamp(1.5rem,    1.786vi + 0.643rem, 2.25rem);
+  --space-7:  clamp(1.5rem,    3.571vi - 0.214rem, 3rem);
+  --space-8:  clamp(2.25rem,   4.167vi + 0.25rem,  4rem);
+  --space-9:  clamp(3rem,      7.143vi - 0.429rem,  6rem);
+  --space-10: clamp(4rem,      9.524vi - 0.571rem,  8rem);
+  --space-11: clamp(6rem,      9.524vi + 1.429rem, 10rem);
+  --space-12: clamp(8rem,     10.714vi + 2.857rem, 12.5rem);
+
+  /* ─── Radii ──────────────────────────────────────────────────────────*/
+  --radius-none:   0px;
+  --radius-sm:     20px;   /* card small */
+  --radius-md:     30px;   /* card medium */
+  --radius-lg:     40px;   /* card large */
+  --radius-btn-sm: 24px;
+  --radius-btn:    48px;   /* pill — standard button */
+  --radius-full:   100px;
+
+  /* ─── Icon sizes ─────────────────────────────────────────────────────*/
+  --icon-sm: 40px;
+  --icon-md: 60px;
+  --icon-lg: 80px;
+
+  /* ─── Layout ─────────────────────────────────────────────────────────*/
+  --content-max: 1280px;
+  --content-pad: var(--space-6); /* inline padding on containers */
+
+  /* ─── Transitions ────────────────────────────────────────────────────*/
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast:   150ms;
+  --duration-normal: 250ms;
+  --duration-slow:   400ms;
+
+  /* ─── Hero background ─────────────────────────────────────────────────
+     The soft glow is a pre-rendered image (img/hero-bg.jpg) — a CSS
+     filter:blur() blanks inside overflow:hidden in WebKit, so the blur is
+     baked into the asset and renders identically in every browser. The
+     gradient below is the CSS fallback if the image fails to load.        */
+  --gradient-hero-base: linear-gradient(155deg, #3d2fb3 0%, #4a39c8 45%, #5a45d6 100%);
+  --gradient-hero-base: #9666F4;
+
+  /* ─── Stat figure gradients (one per stat) ────────────────────────────*/
+  --gradient-stat-1: linear-gradient(180deg, #FFFF91 0%, #FF2C6F 100%);
+  --gradient-stat-2: linear-gradient(180deg, #4DFFFC 0%, #2C48FF 100%);
+  --gradient-stat-3: linear-gradient(180deg, #4DFFCA 0%, #00A346 100%);
+  --gradient-stat-4: linear-gradient(180deg, #FF72F8 0%, #2C48FF 100%);
+
+  /* ─── Top-edge glow border ────────────────────────────────────────────
+     Coral→magenta→purple radial (design spec), softened with blur.        */
+  --gradient-top-glow: radial-gradient(51.87% 92.22% at 50% 2.59%,
+    #FF7878 2.4%, #EA46AE 51.44%, #9D32FF 100%);
+
+  /* ─── Session card gradients (one per card; from design spec) ─────────*/
+  --gradient-card-1: radial-gradient(115.35% 121.19% at 88.85% 102.88%, #3A36FF 1.44%, #16E9E5 100%);  /* blue → cyan */
+  --gradient-card-2: radial-gradient(132.59% 144.36% at 82.97% 110.19%, #629373 1.44%, #6DFFD3 100%);  /* green */
+  --gradient-card-3: radial-gradient(138.02% 141.38% at 97.9% 117.5%, #E55F8B 0%, #F697FF 97.6%);      /* pink → magenta */
+  --gradient-card-4: radial-gradient(158.92% 151.01% at 73.97% 110.96%, #8247E6 0%, #E58EFF 98.56%);   /* purple */
+  --gradient-card-5: radial-gradient(138.02% 141.38% at 97.9% 117.5%, #FF6A9A 0%, #FFE2A3 97.6%);      /* pink → peach */
+
+  /* ─── Buttons ─────────────────────────────────────────────────────────*/
+  --color-cta-hover: #754FFF;            /* CTA hover fill (white text) */
+
+  /* ─── Speaker / headliner section ─────────────────────────────────────*/
+  --color-mint: #C9F6D1;                 /* light mint section field */
+  --gradient-speaker-accent: linear-gradient(90deg, #FF2C6F 0%, #EA46AE 100%); /* "culture" highlight */
+
+  /* ─── Testimonial carousel ────────────────────────────────────────────*/
+  --gradient-quotes-dot: linear-gradient(90deg, #FF2C6F 0%, #9D32FF 100%); /* active progress fill (fallback) */
+
+  /* Per-slide accent — same colors as the stat gradients, but horizontal
+     (90deg). Shared by the quote mark (two strokes read left→right) and the
+     pagination fill (reads along the length of the pill). */
+  --gradient-quotes-1: linear-gradient(90deg, #FFFF91 0%, #FF2C6F 100%);
+  --gradient-quotes-2: linear-gradient(90deg, #4DFFFC 0%, #2C48FF 100%);
+  --gradient-quotes-3: linear-gradient(90deg, #4DFFCA 0%, #00A346 100%);
+  --gradient-quotes-4: linear-gradient(90deg, #FF72F8 0%, #2C48FF 100%);
+
+  /* ─── Humanized motion ────────────────────────────────────────────────
+     Smooth, symmetric ease-in-out — eases gently in and out with no
+     overshoot, softer than a plain ease-out.                              */
+  --ease-smooth:        cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-carousel:  680ms;
+}
