@@ -1,0 +1,116 @@
+/*
+ * base.css — Reset, typography defaults, global element styles
+ */
+
+/* ─── Google Fonts ────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+/* ─── Reset ───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-b-s);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  background-color: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, video, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+a:hover { color: var(--color-link-hover); }
+
+ul, ol { list-style: none; }
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* ─── Typography helpers ──────────────────────────────────────────────── */
+
+/* Display */
+.text-d-l  { font-family: var(--font-headline); font-size: var(--text-d-l);  font-weight: var(--weight-display); line-height: var(--leading-display); }
+.text-d-m  { font-family: var(--font-headline); font-size: var(--text-d-m);  font-weight: var(--weight-display); line-height: var(--leading-display); }
+.text-d-s  { font-family: var(--font-headline); font-size: var(--text-d-s);  font-weight: var(--weight-display); line-height: var(--leading-display); }
+.text-d-xs { font-family: var(--font-headline); font-size: var(--text-d-xs); font-weight: var(--weight-display); line-height: var(--leading-display); }
+
+/* Headings */
+.text-h-xxl { font-family: var(--font-headline); font-size: var(--text-h-xxl); font-weight: var(--weight-h-xxl); line-height: var(--leading-h-xxl); }
+.text-h-xl  { font-family: var(--font-headline); font-size: var(--text-h-xl);  font-weight: var(--weight-h-xl);  line-height: var(--leading-h-xl); }
+.text-h-l   { font-family: var(--font-headline); font-size: var(--text-h-l);   font-weight: var(--weight-h-l);   line-height: var(--leading-h-l); }
+.text-h-m   { font-family: var(--font-headline); font-size: var(--text-h-m);   font-weight: var(--weight-h-m);   line-height: var(--leading-h-m); }
+.text-h-s   { font-family: var(--font-headline); font-size: var(--text-h-s);   font-weight: var(--weight-h-s);   line-height: var(--leading-h-s); }
+.text-h-xs  { font-family: var(--font-headline); font-size: var(--text-h-xs);  font-weight: var(--weight-h-xs);  line-height: var(--leading-h-xs); }
+
+/* Body */
+.text-b-l  { font-size: var(--text-b-l);  font-weight: var(--weight-body); line-height: var(--leading-body); }
+.text-b-m  { font-size: var(--text-b-m);  font-weight: var(--weight-body); line-height: var(--leading-body); }
+.text-b-s  { font-size: var(--text-b-s);  font-weight: var(--weight-body); line-height: var(--leading-body); }
+.text-b-xs { font-size: var(--text-b-xs); font-weight: var(--weight-body); line-height: var(--leading-body); }
+
+/* ─── Scroll reveal ───────────────────────────────────────────────────────
+   Content fades/rises in as each section scrolls into view. JS (main.js) adds
+   `.reveal-ready` to <html> only when IntersectionObserver is supported AND
+   motion is allowed, then toggles `.is-revealed` per element on intersect —
+   so with no JS or reduced motion the hidden states below never apply and all
+   content shows normally.
+   · [data-reveal]          — the element itself fades/rises in as one unit.
+   · [data-reveal-children] — its direct children cascade in, staggered via
+                              the per-child --reveal-delay set in JS. */
+.reveal-ready [data-reveal],
+.reveal-ready [data-reveal-children] > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Gradient text (-webkit-background-clip: text) disappears when an ancestor is
+   transformed/composited. Reveal targets that contain such text therefore
+   animate opacity ONLY — no translate. Covers: the stat figures, the CTA
+   headline accent, and the speaker quote accent. */
+.reveal-ready .stats__grid > .stats__item,
+.reveal-ready .cta__inner > .cta__title,
+.reveal-ready .speaker__inner > .speaker__body {
+  transform: none;
+}
+
+.reveal-ready [data-reveal].is-revealed,
+.reveal-ready [data-reveal-children].is-revealed > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── Reduced motion ──────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

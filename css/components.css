@@ -1,0 +1,175 @@
+/*
+ * components.css — Reusable UI components: buttons, cards, badges
+ * All block-specific overrides live in blocks/*.css, not here.
+ */
+
+/* ─── Buttons ─────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-btn);
+  font-family: var(--font-body);
+  font-size: var(--text-b-s);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    color            var(--duration-normal) var(--ease-out),
+    transform        var(--duration-fast)   var(--ease-out);
+}
+
+.btn:hover  { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+/* Primary — blue */
+.btn--primary {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+}
+.btn--primary:hover {
+  background-color: var(--color-primary-medium);
+  color: var(--color-white);
+}
+
+/* Secondary — purple */
+.btn--secondary {
+  color: var(--color-white);
+  background-color: var(--color-secondary);
+}
+.btn--secondary:hover {
+  background-color: var(--color-secondary-medium);
+  color: var(--color-white);
+}
+
+/* Tertiary — ink/dark (for light sections); shares the purple CTA hover */
+.btn--tertiary {
+  color: var(--color-white);
+  background-color: var(--color-tertiary);
+}
+.btn--tertiary:hover {
+  background-color: var(--color-cta-hover);
+  color: var(--color-white);
+}
+
+/* White — black text on white; turns purple with white text on hover.
+   The canonical CTA treatment (Save the Date). */
+.btn--white {
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+.btn--white:hover {
+  background-color: var(--color-cta-hover);
+  color: var(--color-white);
+}
+
+/* Ghost — outlined */
+.btn--ghost {
+  color: var(--color-white);
+  background-color: transparent;
+  border: 1.5px solid var(--color-white);
+}
+.btn--ghost:hover {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+}
+
+/* Sizes */
+.btn--sm {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-b-xs);
+  border-radius: var(--radius-btn-sm);
+}
+
+.btn--lg {
+  padding: var(--space-5) var(--space-8);
+  font-size: var(--text-b-m);
+}
+
+/* ─── Cards ───────────────────────────────────────────────────────────── */
+.card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-7);
+  transition: border-color var(--duration-normal) var(--ease-out);
+}
+
+.card:hover {
+  border-color: var(--color-border-hover);
+}
+
+.card--sm  { border-radius: var(--radius-sm); padding: var(--space-6); }
+.card--lg  { border-radius: var(--radius-lg); padding: var(--space-8); }
+.card--dark {
+  background-color: var(--color-black);
+  border-color: var(--color-dark-40);
+  color: var(--color-white);
+}
+
+/* ─── Eyebrow / Label ─────────────────────────────────────────────────── */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--text-b-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.eyebrow--light {
+  color: var(--color-white-80);
+}
+
+/* ─── Badge ───────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--text-b-xs);
+  font-weight: 500;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.badge--dark {
+  background-color: var(--color-white-10);
+  color: var(--color-white-80);
+  border: 1px solid var(--color-white-20);
+}
+
+/* ─── Divider ─────────────────────────────────────────────────────────── */
+hr,
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin-block: var(--space-8);
+}
+
+/* ─── Section headings ────────────────────────────────────────────────── */
+.section-header {
+  max-width: 640px;
+}
+
+.section-header--centered {
+  max-width: 640px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* ─── Gradient text ───────────────────────────────────────────────────── */
+.text-gradient {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

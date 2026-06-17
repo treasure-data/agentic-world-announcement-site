@@ -1,0 +1,172 @@
+/*
+ * stats.css — "Event by the numbers" band
+ * Dark section, four stat figures (each its own gradient), all-caps labels,
+ * a description below, and vertical dividers spanning number + label.
+ * All values reference tokens in css/tokens.css.
+ */
+
+.stats {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  /* Give the band a defined height so the 16:9 video has room to breathe
+     instead of being cropped to a thin slice. Tune the clamp to taste. */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: clamp(440px, 42vw, 640px);
+  background-color: var(--color-black); /* fallback if the video fails to load */
+  color: var(--color-white);
+}
+
+/* Background video layer — sits behind the overlay and content */
+.stats__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.stats__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fill the band, cropping as needed */
+}
+
+/* Flat 88% brand-black overlay keeps the figures readable over the video */
+.stats::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-color: color-mix(in srgb, var(--color-black) 80%, transparent);
+}
+
+/* Content sits above the video and overlay */
+.stats .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Respect reduced-motion: drop the video, keep the solid black band */
+@media (prefers-reduced-motion: reduce) {
+  .stats__bg {
+    display: none;
+  }
+}
+
+.stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: var(--space-8);
+  row-gap: var(--space-9);
+}
+
+.stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+/* Number + label group; the divider is anchored here so it spans only
+   this block (not the description below it), matching the design. */
+.stats__head {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.stats__item:not(:first-child) .stats__head::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(-0.5 * var(--space-8));
+  width: 1px;
+  background-color: var(--color-white-20);
+}
+
+.stats__value {
+  font-family: var(--font-headline);
+  font-size: var(--text-d-m);
+  font-weight: 800;
+  line-height: 1;
+  /* Gradient text — fill per modifier below */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.stats__value--1 { background-image: var(--gradient-stat-1); }
+.stats__value--2 { background-image: var(--gradient-stat-2); }
+.stats__value--3 { background-image: var(--gradient-stat-3); }
+.stats__value--4 { background-image: var(--gradient-stat-4); }
+
+/* On scroll-reveal each figure grows from 90% to full size as it fades in.
+   The scale is applied to the figure itself (not an ancestor) and the settled
+   state is `transform: none`, so the gradient text clip renders correctly at
+   rest. Delay is inherited from each item's --reveal-delay so the grow syncs
+   with its fade. */
+/* Slightly slower than the global reveal, and the item fade is slowed to match
+   so the grow and fade stay in sync (the item only animates opacity here — its
+   transform is forced to none in base.css). */
+.reveal-ready .stats__grid > .stats__item {
+  transition-duration: 1s;
+}
+
+.reveal-ready .stats__value {
+  transform: scale(0.9);
+  transform-origin: center;
+  transition: transform 1s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-ready .stats__grid.is-revealed .stats__value {
+  transform: none;
+}
+
+.stats__label {
+  font-family: var(--font-body);
+  font-size: var(--text-b-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.stats__desc {
+  max-width: 26ch;
+  font-size: var(--text-b-s);
+  line-height: var(--leading-body);
+  color: var(--color-white-60);
+  text-transform: capitalize;
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .stats__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* No divider at the start of each row */
+  .stats__item:nth-child(2n + 1) .stats__head::before {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .stats__grid {
+    grid-template-columns: 1fr;
+  }
+  .stats__head::before {
+    display: none;
+  }
+  /* Center the description under its (already centered) number + label. */
+  .stats__desc {
+    text-align: center;
+    margin-inline: auto;
+  }
+}

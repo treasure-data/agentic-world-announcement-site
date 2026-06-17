@@ -1,0 +1,181 @@
+/*
+ * quotes.css — Testimonial carousel
+ * Lives INSIDE the hero section (blocks/hero.css) so it sits on the hero's
+ * single continuous background — the bright field shows through the
+ * transparent cards and the hero's overlay fades it to black below them.
+ * A center card is highlighted while neighbours peek in dimmed. JS
+ * (js/main.js) drives the track transform + dots. Values reference tokens.
+ */
+
+.quotes {
+  position: relative;
+  z-index: 2;            /* content layer — above the hero's bg + black fade */
+  color: var(--color-white);
+  text-align: left;      /* the hero centres text; cards read left */
+  margin-top: calc(var(--space-8) * 1.75);
+}
+
+/* ─── Track / slides ──────────────────────────────────────────────────── */
+.quotes__viewport {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.quotes__track {
+  display: flex;
+  align-items: stretch;            /* all cards match the tallest */
+  gap: var(--space-6);
+  will-change: transform;
+  transition: transform var(--duration-carousel) var(--ease-smooth);
+}
+
+/* During a seamless loop-wrap (and on resize/load) JS repositions the track
+   with no transition. Suppress the slide opacity + card scale transitions too,
+   so the newly-centered real slide doesn't re-run its scale-in animation after
+   the instant jump. */
+.quotes__track.is-snapping,
+.quotes__track.is-snapping .quotes__slide,
+.quotes__track.is-snapping .quote-card {
+  transition: none !important;
+}
+
+.quotes__slide {
+  flex: 0 0 min(840px, 88vw);
+  display: flex;                   /* let the card stretch to slide height */
+  opacity: 0.3;
+  transition: opacity var(--duration-carousel) var(--ease-out);
+}
+
+.quotes__slide.is-active { opacity: 1; }
+
+/* Neighbours are clickable to bring them to center. */
+.quotes__slide:not(.is-active) { cursor: pointer; }
+
+/* ─── Card ────────────────────────────────────────────────────────────── */
+.quote-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(2rem, 4vw, 3.5rem);
+  border: 1px solid var(--color-white-20);
+  border-radius: var(--radius-lg);
+  /* Inactive slides sit slightly smaller; the active one scales to full. */
+  transform: scale(0.9);
+  transform-origin: center;
+  transition: transform var(--duration-carousel) var(--ease-smooth);
+}
+
+.quotes__slide.is-active .quote-card { transform: scale(1); }
+
+.quote-card__mark {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  /* Gradient text — unique fill per card (like the stats figures).
+     The glyph's ink sits high in its line box, so the gradient is sized and
+     positioned to land on the ink and flow top→bottom down each stroke
+     (a full-box fill would only show the top color). */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  background-repeat: no-repeat;
+  background-size: 100% 0.6em;
+  background-position: 0 0.08em;
+}
+
+.quote-card__mark--1 { background-image: var(--gradient-stat-1); }
+.quote-card__mark--2 { background-image: var(--gradient-stat-2); }
+.quote-card__mark--3 { background-image: var(--gradient-stat-3); }
+.quote-card__mark--4 { background-image: var(--gradient-stat-4); }
+
+.quote-card__text {
+  margin-top: var(--space-6);
+  font-family: var(--font-headline);
+  font-size: var(--text-h-m);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--color-white);
+  text-transform: capitalize;
+  text-wrap: balance;
+}
+
+.quote-card__author {
+  margin-top: var(--space-7);
+  font-size: var(--text-b-m);
+  font-weight: 700;
+  font-style: normal;
+  color: var(--color-white);
+  text-transform: capitalize;
+}
+
+/* ─── Pagination dots ─────────────────────────────────────────────────── */
+.quotes__dots {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+.quotes__dot {
+  position: relative;
+  overflow: hidden;
+  width: 28px;
+  height: 5px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background-color: var(--color-white-20);
+  transition: width var(--duration-carousel) var(--ease-smooth);
+}
+
+.quotes__dot.is-active { width: 64px; }
+
+/* Each dot's fill matches its slide's quote-mark gradient (horizontal). */
+.quotes__dot--1 { --dot-fill: var(--gradient-quotes-1); }
+.quotes__dot--2 { --dot-fill: var(--gradient-quotes-2); }
+.quotes__dot--3 { --dot-fill: var(--gradient-quotes-3); }
+.quotes__dot--4 { --dot-fill: var(--gradient-quotes-4); }
+
+/* Gradient progress-fill that grows over the auto-advance interval.
+   scaleX (not width) so it's unambiguous across browsers — animating width
+   on an inset-pinned pseudo-element renders full instantly in Safari. */
+.quotes__dot.is-active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--dot-fill, var(--gradient-quotes-dot));
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: quotes-fill 6s linear forwards;
+}
+
+/* Pause the fill only while hovering a card or a dot (matches the JS timer). */
+.quotes:has(.quote-card:hover) .quotes__dot.is-active::after,
+.quotes:has(.quotes__dot:hover) .quotes__dot.is-active::after,
+.quotes:has(.quotes__dot:focus-visible) .quotes__dot.is-active::after {
+  animation-play-state: paused;
+}
+
+@keyframes quotes-fill {
+  to { transform: scaleX(1); }
+}
+
+/* No auto-advance / fill animation when the user prefers reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .quotes__track { transition: none; }
+  .quotes__dot.is-active::after { animation: none; transform: scaleX(1); }
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .quotes__slide { flex-basis: 88vw; }
+  .quote-card__text { font-size: var(--text-b-l); }
+}

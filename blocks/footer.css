@@ -1,0 +1,97 @@
+/*
+ * footer.css — Site footer: Agentic World lockup (left) + legal links (right).
+ * Sits below the dark CTA band; continues the black background.
+ * All values reference tokens in css/tokens.css.
+ */
+
+.footer {
+  background-color: var(--color-black);
+  color: var(--color-white-60);
+  padding-block: var(--space-7);
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-7) var(--space-8);
+  flex-wrap: wrap;
+  position: relative;
+}
+
+/* Divider line above the footer content. */
+.footer__inner::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--space-7) * -1);
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--color-white-20);
+}
+
+/* ─── Lockup: logo + stacked meta ──────────────────────────────────────── */
+.footer__signoff {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.footer__logo {
+  width: auto;
+  height: clamp(56px, 8vw, 70px);
+}
+
+.footer__meta {
+  font-size: var(--text-b-s);
+  line-height: 1.5;
+  color: var(--color-white);
+}
+
+/* ─── Legal links + copyright ──────────────────────────────────────────── */
+.footer__legal-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-4);
+  text-align: right;
+}
+
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3) var(--space-6);
+}
+
+.footer__link {
+  font-size: var(--text-b-xs);
+  color: var(--color-white-60);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer__link:hover,
+.footer__link:focus-visible {
+  color: var(--color-white);
+}
+
+.footer__copy {
+  font-size: var(--text-b-xs);
+  color: var(--color-white-40);
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer__legal-wrap {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .footer__legal {
+    justify-content: flex-start;
+  }
+}

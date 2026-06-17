@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Agentic World//Agentic World 2026//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:agentic-world-2026@agenticworld.com
+DTSTAMP:20260616T000000Z
+DTSTART;VALUE=DATE:20261005
+DTEND;VALUE=DATE:20261008
+SUMMARY:Agentic World 2026
+LOCATION:JW Marriott Turnberry Resort & Spa\, Aventura\, FL
+DESCRIPTION:Save the date for Agentic World 2026. October 5-7\, Miami.
+URL:https://agenticworld.com
+END:VEVENT
+END:VCALENDAR

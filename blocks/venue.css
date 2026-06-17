@@ -1,0 +1,99 @@
+/*
+ * venue.css — "The Location" section
+ * Light two-column layout: info + icon list (left), map card + CTA (right).
+ * All values reference tokens in css/tokens.css.
+ */
+
+.venue {
+  background-color: var(--color-white);
+  color: var(--color-text);
+}
+
+.venue__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-9);
+  align-items: center;
+}
+
+/* ─── Info column ──────────────────────────────────────────────────────── */
+.venue__title {
+  margin-top: var(--space-5);
+  font-family: var(--font-headline);
+  font-size: var(--text-d-s);
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--color-text);
+}
+
+.venue__desc {
+  margin-top: var(--space-6);
+  font-size: var(--text-b-m);
+  line-height: var(--leading-body);
+  color: var(--color-text-60);
+}
+
+.venue__details {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.venue__detail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-b-m);
+  color: var(--color-text);
+}
+
+.venue__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.venue__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ─── Aside: map card + CTA ────────────────────────────────────────────── */
+.venue__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-7);
+}
+
+.venue__map {
+  width: 100%;
+  aspect-ratio: 1.6;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-light); /* fallback while the map loads */
+}
+
+/* Non-interactive: pointer-events off (no pan/zoom/click), out of tab order */
+.venue__map-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  pointer-events: none;
+}
+
+.venue__cta {
+  padding: var(--space-5) var(--space-8);
+  font-size: var(--text-b-l);
+  font-weight: 700;
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .venue__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+}
