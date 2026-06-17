@@ -215,15 +215,20 @@
     window.addEventListener('resize', function () { jump(); });
     window.addEventListener('load', function () { jump(); }); // re-measure after fonts/images
 
-    // The offset is measured from the viewport width; if the page is first laid
-    // out in a background tab (or restored from the bfcache) that width can read
-    // 0, leaving the track parked off-screen so the reel looks empty until
-    // something forces a re-measure. Re-place when the tab becomes visible and
-    // on bfcache restore.
+    // Pause auto-advance while the tab is hidden, then re-sync on return.
+    // The loop-wrap correction lives in the transitionend handler, and
+    // transitions don't fire in a background tab — so a timer left running
+    // there walks `pos` off the end of the slides without ever wrapping,
+    // leaving the track parked off-screen (blank reel) when you come back.
+    // Stopping the timer prevents the drift; snapping `pos` back to its real
+    // index repairs any move that was mid-flight when the tab was hidden.
     document.addEventListener('visibilitychange', function () {
-      if (!document.hidden) { jump(); }
+      if (document.hidden) { stop(); return; }
+      pos = base + realIndex();   // normalize out of the clone zone
+      jump();
+      start();
     });
-    window.addEventListener('pageshow', function () { jump(); });
+    window.addEventListener('pageshow', function () { pos = base + realIndex(); jump(); });
 
     jump();
     start();
