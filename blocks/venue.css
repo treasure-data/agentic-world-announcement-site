@@ -84,12 +84,6 @@
   pointer-events: none;
 }
 
-.venue__cta {
-  padding: var(--space-5) var(--space-8);
-  font-size: var(--text-b-l);
-  font-weight: 700;
-}
-
 /* ─── Responsive ───────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .venue__grid {
