@@ -1,2 +1,6 @@
 .DS_Store
 .netlify
+
+# Scratch / source exports not used by the site
+_eb-tmp.html
+*.mov
