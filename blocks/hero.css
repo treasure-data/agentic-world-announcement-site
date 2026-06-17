@@ -246,6 +246,14 @@
   color: var(--color-white);
 }
 
+/* Treasure wordmark + diamond standing in for the "Presented by" value.
+   Matches the type size of the adjacent meta values. */
+.hero__meta-logo {
+  display: block;
+  width: auto;
+  height: var(--text-h-xs);
+}
+
 /* ─── Photo strip ──────────────────────────────────────────────────────── */
 /* Scattered, editorial collage — each photo carries its own aspect ratio,
    width, vertical offset and tilt. Centered on a shared baseline so the

@@ -215,6 +215,16 @@
     window.addEventListener('resize', function () { jump(); });
     window.addEventListener('load', function () { jump(); }); // re-measure after fonts/images
 
+    // The offset is measured from the viewport width; if the page is first laid
+    // out in a background tab (or restored from the bfcache) that width can read
+    // 0, leaving the track parked off-screen so the reel looks empty until
+    // something forces a re-measure. Re-place when the tab becomes visible and
+    // on bfcache restore.
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) { jump(); }
+    });
+    window.addEventListener('pageshow', function () { jump(); });
+
     jump();
     start();
   });
