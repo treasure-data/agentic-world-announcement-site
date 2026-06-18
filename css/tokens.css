@@ -169,6 +169,7 @@
   --gradient-card-3: radial-gradient(138.02% 141.38% at 97.9% 117.5%, #E55F8B 0%, #F697FF 97.6%);      /* pink → magenta */
   --gradient-card-4: radial-gradient(158.92% 151.01% at 73.97% 110.96%, #8247E6 0%, #E58EFF 98.56%);   /* purple */
   --gradient-card-5: radial-gradient(138.02% 141.38% at 97.9% 117.5%, #FF6A9A 0%, #FFE2A3 97.6%);      /* pink → peach */
+  --gradient-card-6: radial-gradient(142.18% 138.74% at 90.12% 108.4%, #FF7A45 0%, #FFC371 98.56%);   /* orange → amber */
 
   /* ─── Buttons ─────────────────────────────────────────────────────────*/
   --color-cta-hover: #754FFF;            /* CTA hover fill (white text) */
