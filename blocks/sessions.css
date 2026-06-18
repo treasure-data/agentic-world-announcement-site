@@ -78,19 +78,9 @@
   gap: var(--space-6);
 }
 
-/* Row 2: wide card spans two columns, narrow card stays one (and taller) */
-.scard--4 {
-  grid-column: span 2;
-  align-self: start;
-  min-height: 18rem;
-}
-
-.scard--5 {
-  min-height: 23rem;
-}
-
 /* ─── Card ─────────────────────────────────────────────────────────────── */
 .scard {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -102,11 +92,28 @@
   overflow: hidden;
 }
 
+/* Legibility scrim — keeps white text readable on the lighter warm gradients
+   while barely affecting the darker cards. */
+.scard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.34) 0%, rgba(0, 0, 0, 0.1) 42%, transparent 68%);
+  pointer-events: none;
+}
+
+.scard__top,
+.scard__text {
+  position: relative;
+  z-index: 1;
+}
+
 .scard--1 { background-image: var(--gradient-card-1); }
 .scard--2 { background-image: var(--gradient-card-2); }
-.scard--3 { background-image: var(--gradient-card-3); }
-.scard--4 { background-image: var(--gradient-card-4); }
+.scard--3 { background-image: var(--gradient-card-6); }
+.scard--4 { background-image: var(--gradient-card-3); }
 .scard--5 { background-image: var(--gradient-card-5); }
+.scard--6 { background-image: var(--gradient-card-4); }
 
 .scard__top {
   display: flex;
@@ -147,10 +154,6 @@
   .sessions__grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .scard--4 {
-    grid-column: auto;
-    align-self: stretch;
-  }
 }
 
 @media (max-width: 768px) {
@@ -164,9 +167,7 @@
   .sessions__grid {
     grid-template-columns: 1fr;
   }
-  .scard,
-  .scard--4,
-  .scard--5 {
+  .scard {
     min-height: 14rem;
   }
 }
